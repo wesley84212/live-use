@@ -1,0 +1,37 @@
+version: '3'
+services: 
+  
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    command: --sql_mode=""
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+     - mysql-volume:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8183:80
+    volumes:
+      - phpmyadmin:/var/lib/phpmyadmin
+
+volumes:
+  data-volume:
+  pgadmin:
+  mysql-volume:
+  phpmyadmin:
