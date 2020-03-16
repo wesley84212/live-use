@@ -68,6 +68,14 @@ class ChartsApp extends Component {
         return result;
     }
 
+    setKhwTotal(data) {
+        let total = null;
+        data.map((data, i) => {
+            total += data.y;
+        })
+        return total
+    }
+
     render() {
         // const data = [
         //     { x: '2020/03/04', y: 0 },
@@ -83,6 +91,7 @@ class ChartsApp extends Component {
         // ];
         const { testData } = this.state;
         let newData = this.getData(testData);
+        let total = this.setKhwTotal(newData);
         const { value } = this.state;
         return (
             <>
@@ -105,6 +114,7 @@ class ChartsApp extends Component {
                     {value ? <Hint value={value} /> : null}
                 </XYPlot>
                 <div><Link to="/FormTest" ><button>測試</button></Link></div>
+                <span>電表總額:{total}</span>
             </>
         );
     }

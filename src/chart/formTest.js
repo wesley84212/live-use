@@ -7,7 +7,8 @@ class FromTest extends Component {
         super(props);
         this.state = {
             value: '',
-            date: ''
+            date: '',
+            flag: false
         };
         this.valueChange = this.valueChange.bind(this);
         this.dateChange = this.dateChange.bind(this);
@@ -41,23 +42,33 @@ class FromTest extends Component {
         let input = [];
         input.push(this.state.value);
         input.push(this.state.date);
-        this.createKhwData(input);
-        alert("今日電表紀錄完成")
+        this.createKhwData(input).then((res) => {
+            if (res.result === 'error') {
+                alert(res.msg)
+            } else {
+                this.setState({ flag: true })
+            }
+        })
+        event.preventDefault();
     }
 
     render() {
-        return (
-            <form onSubmit={this.dataSubmit}>
-                <label>
-                    電錶度數:
-              <input type="text" value={this.state.value} onChange={this.valueChange} />
-                </label>
-                <label>今日日期: </label>
-                <input type="date" date={this.state.date} onChange={this.dateChange} />
-                <input type="submit" value="Submit" />
-            </form>
+        if (this.state.flag === true) {
+            return (<Redirect to='/ChartApp' />);
+        } else
+            return (
 
-        );
+                <form onSubmit={this.dataSubmit}>
+                    <label>
+                        電錶度數:
+              <input type="text" value={this.state.value} onChange={this.valueChange} />
+                    </label>
+                    <label>今日日期: </label>
+                    <input type="date" date={this.state.date} onChange={this.dateChange} />
+                    <input type="submit" value="Submit" />
+                </form>
+
+            );
     }
 }
 export default FromTest;

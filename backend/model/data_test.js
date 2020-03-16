@@ -17,12 +17,15 @@ let KHWModel = function () {
 
     let createList = async (input) => {
         let sql = `INSERT INTO Electricity(value, create_date) VALUES (${input[0]},'${input[1]}')`
+        if (input[0] === '') {
+            return { result: 'error', msg:'No data' };
+        }
         return new Promise((resolve, reject) => {
             connect.query(sql, async function (err, result) {
                 if (err) {
-                    reject(err);
+                    reject({ result: 'error', err });
                 } else {
-                    resolve({ result:'success' });
+                    resolve({ result: 'success' });
                 }
             })
 
