@@ -30,8 +30,18 @@ services:
     volumes:
       - phpmyadmin:/var/lib/phpmyadmin
 
+  node-web:
+    build:
+      context: .
+    ports:
+        - 3000:3000
+
+  node-back:
+    build:
+      context: ./backend
+    ports: 
+        - 3001:3001
+
 volumes:
-  data-volume:
-  pgadmin:
   mysql-volume:
   phpmyadmin:

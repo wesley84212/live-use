@@ -15,10 +15,27 @@ let KHWModel = function () {
         })
     };
 
+    let getListByMonth = (month) => {
+        const monthMap = {
+            '3': '2020-03',
+            '4': '2020-04'
+        };
+        let sql = `SELECT value,create_date FROM Electricity WHERE create_date LIKE '${monthMap[month]}%'`;
+        return new Promise((resolve, reject) => {
+            connect.query(sql, function (err, result) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result)
+                }
+            })
+        })
+    }
+
     let createList = async (input) => {
         let sql = `INSERT INTO Electricity(value, create_date) VALUES (${input[0]},'${input[1]}')`
         if (input[0] === '') {
-            return { result: 'error', msg:'No data' };
+            return { result: 'error', msg: 'No data' };
         }
         return new Promise((resolve, reject) => {
             connect.query(sql, async function (err, result) {
@@ -28,13 +45,13 @@ let KHWModel = function () {
                     resolve({ result: 'success' });
                 }
             })
-
         });
     }
 
     return {
         getList: getList,
-        createList: createList
+        createList: createList,
+        getListByMonth: getListByMonth
     }
 
 }();

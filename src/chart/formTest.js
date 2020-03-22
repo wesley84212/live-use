@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class FromTest extends Component {
 
@@ -30,14 +30,13 @@ class FromTest extends Component {
             throw res;
         }
     }
+
     valueChange(event) {
         this.setState({ value: Number(event.target.value) });
     }
-
     dateChange(event) {
         this.setState({ date: event.target.value });
     }
-
     dataSubmit(event) {
         let input = [];
         input.push(this.state.value);
@@ -57,7 +56,6 @@ class FromTest extends Component {
             return (<Redirect to='/ChartApp' />);
         } else
             return (
-
                 <form onSubmit={this.dataSubmit}>
                     <label>
                         電錶度數:

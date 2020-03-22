@@ -67,34 +67,44 @@ class ChartsApp extends Component {
         });
         return result;
     }
+    async GetKhwDataByMonth(month) {
+        const request = new Request('http://localhost:3001/kHw/' + month, {
+            method: 'GET',
+            headers: new Headers({
+                'content-Type': 'application/json'
+            })
+        });
+        const res = await fetch(request);
+        if (res.status === 200) {
+            return res.json();
+        } else {
+            throw res;
+        }
+    }
 
     setKhwTotal(data) {
         let total = null;
-        data.map((data, i) => {
+        data.map((data) => {
             total += data.y;
         })
         return total
     }
 
     render() {
-        // const data = [
-        //     { x: '2020/03/04', y: 0 },
-        //     { x: '2020/03/05', y: (2029 - 2024) },
-        //     { x: '2020/03/06', y: (2033 - 2029) },
-        //     { x: '2020/03/07', y: (2038 - 2033) },
-        //     { x: '2020/03/08', y: (2042 - 2038) },
-        //     { x: '2020/03/09', y: (2046.5 - 2042) },
-        //     { x: '2020/03/10', y: (2050 - 2046.5) },
-        //     { x: '2020/03/11', y: (2054 - 2050) },
-        //     { x: '2020/03/12', y: (2058 - 2054) },
-        //     { x: '2020/03/13', y: 5 },
-        // ];
         const { testData } = this.state;
         let newData = this.getData(testData);
         let total = this.setKhwTotal(newData);
         const { value } = this.state;
         return (
             <>
+                <div>
+                    <button onClick={async (e) => { this.setState({ testData: await this.GetKhwData() }) }}>總覽</button>
+                    <button onClick={async (e) => { this.setState({ testData: await this.GetKhwDataByMonth(3) }) }}>3月</button>
+                    <button onClick={async (e) => { this.setState({ testData: await this.GetKhwDataByMonth(4) }) }}>4月</button>
+                    <button onClick={async (e) => { this.setState({ testData: await this.GetKhwDataByMonth(5) }) }}>5月</button>
+                    <button onClick={async (e) => { this.setState({ testData: await this.GetKhwDataByMonth(6) }) }}>6月</button>
+                </div>
+
                 <XYPlot
                     width={1140}
                     height={440}
