@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Cart from './Cart';
 import { withRouter } from 'react-router-dom'
 
 function ProductList(props) {
   const [mycart, setMycart] = useState([])
   const [dataLoading, setDataLoading] = useState(false)
-  const [cartFlag, setCartFlag] = useState({cartFlag:false})
+  const [cartFlag, setCartFlag] = useState({ cartFlag: false })
+  const textInput = useRef(null);
+  const textDiv = useRef(null);
 
   async function updateCartToLocalStorage(value) {
 
     setDataLoading(true)
-    setCartFlag({cartFlag:true})
+    setCartFlag({ cartFlag: true })
 
     const currentCart = JSON.parse(localStorage.getItem('cart')) || []
     const newCart = [...currentCart, value]
@@ -45,30 +47,28 @@ function ProductList(props) {
             className="card-img-top"
             alt="..."
           />
-          <div className="card-body">
-            <h5 className="card-title">iphone XS</h5>
-            <p className="card-text">
+          <div
+            className="card-body">
+            <h5 className="card-title" ref={textInput}>iphone XS</h5>
+            <p className="card-text" >
               This is a longer card with supporting text below as a natural
               lead-in to additional content. This content is a little bit
               longer.
             </p>
-            <p className="card-text text-danger">NTD 15000元</p>
-          </div>
-          <div className="card-footer">
+            <p className="card-text text-danger" title="1500" ref={textDiv}>NTD 15000元</p>
             <button
               type="button"
               className="btn btn-success"
               onClick={() => {
-                updateCartToLocalStorage({
-                  id: 1,
-                  name: 'iphone x',
-                  amount: 1,
-                  price: 15000,
-                })
+                let obj = {
+                  productName: textInput.current.textContent,
+                  price: Number(textDiv.current.title)
+                }
+                console.log(obj);
               }}
             >
               加入購物車
-            </button>
+          </button>
           </div>
         </div>
         <div className="card">
@@ -121,7 +121,7 @@ function ProductList(props) {
             <button
               type="button"
               className="btn btn-success"
-              onClick={() => {
+              onClick={(e) => {
                 updateCartToLocalStorage({
                   id: 2,
                   name: 'ipad',
@@ -140,7 +140,7 @@ function ProductList(props) {
 
   return (
     <>
-    <Cart {...cartFlag} />
+      <Cart {...cartFlag} />
       <div className="container">{dataLoading ? loading : display}</div>
     </>
   )
