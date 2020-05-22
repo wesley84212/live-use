@@ -3,7 +3,7 @@ services:
   
   db:
     container_name: db
-    image: mysql:5.7
+    image: arm64v8/mariadb
     restart: always
     command: --sql_mode=""
     ports:
@@ -25,23 +25,20 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always
+    networks:
+      extnetwork:
+         ipv4_address: 192.168.1.112
     ports:
       - 8183:80
     volumes:
       - phpmyadmin:/var/lib/phpmyadmin
 
-  node-web:
-    build:
-      context: .
-    ports:
-        - 3000:3000
-
-  node-back:
-    build:
-      context: ./backend
-    ports: 
-        - 3001:3001
-
 volumes:
   mysql-volume:
   phpmyadmin:
+
+networks:
+  extnetwork:
+      ipam:
+        config:
+        - subnet: 192.168.1.0/16
