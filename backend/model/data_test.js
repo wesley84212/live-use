@@ -18,7 +18,9 @@ let KHWModel = function () {
     let getListByMonth = (month) => {
         const monthMap = {
             '3': '2020-03',
-            '4': '2020-04'
+            '4': '2020-04',
+            '5': '2020-05',
+            '6': '2020-06',
         };
         let sql = `SELECT value,create_date FROM Electricity WHERE create_date LIKE '${monthMap[month]}%'`;
         return new Promise((resolve, reject) => {
