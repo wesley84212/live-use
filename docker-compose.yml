@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services: 
   
   db:
@@ -25,20 +25,11 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always
-    networks:
-      extnetwork:
-         ipv4_address: 192.168.1.112
     ports:
-      - 8183:80
+      - 3000:80
     volumes:
       - phpmyadmin:/var/lib/phpmyadmin
 
 volumes:
   mysql-volume:
   phpmyadmin:
-
-networks:
-  extnetwork:
-      ipam:
-        config:
-        - subnet: 192.168.1.0/16
