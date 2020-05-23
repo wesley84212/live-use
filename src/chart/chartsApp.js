@@ -14,7 +14,7 @@ class ChartsApp extends Component {
         };
     }
     async GetKhwData() {
-        const request = new Request('http://localhost:3001/kHw/', {
+        const request = new Request('http://192.168.1.112:3001/kHw/', {
             method: 'GET',
             headers: new Headers({
                 'content-Type': 'application/json'
@@ -68,7 +68,7 @@ class ChartsApp extends Component {
         return result;
     }
     async GetKhwDataByMonth(month) {
-        const request = new Request('http://localhost:3001/kHw/' + month, {
+        const request = new Request('http://192.168.1.112:3001/kHw/' + month, {
             method: 'GET',
             headers: new Headers({
                 'content-Type': 'application/json'
@@ -123,7 +123,7 @@ class ChartsApp extends Component {
                     />
                     {value ? <Hint value={value} /> : null}
                 </XYPlot>
-                <div><Link to="/FormTest" ><button>測試</button></Link></div>
+                <div><Link to="/FormTest" ><button>填入電表</button></Link></div>
                 <span>電表總額:{total}</span>
             </>
         );

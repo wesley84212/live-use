@@ -5,13 +5,15 @@ var logger = require('morgan');
 var kWhRouter = require('./routers/kWh');
 var app = express();
 var cors = require('cors');
-var whitelist = ['http://localhost:3000', 'http://127.0.0.1:3000']
+var whitelist = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://192.168.1.112:3000']
 const corsOptions = {
   origin: [
     'http://localhost:3000', 
     'http://127.0.0.1:3000',
     'http://localhost:8080',
-    'http://172.20.10.8:3000  '
+    'http://172.20.10.8:3000',
+    'http://192.168.1.112:3000',
+    'http://192.168.1.106:3000'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', 'Authorization'],

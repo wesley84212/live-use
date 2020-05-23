@@ -15,7 +15,7 @@ class FromTest extends Component {
         this.dataSubmit = this.dataSubmit.bind(this);
     }
     async createKhwData(input) {
-        const request = new Request('http://localhost:3001/kHw/create', {
+        const request = new Request('http://192.168.1.112:3001/kHw/create', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
